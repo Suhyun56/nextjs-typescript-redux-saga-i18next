@@ -1,11 +1,21 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from '@/styles/Home.module.css'
+import Head from "next/head"
+import Image from "next/image"
+import { Inter } from "@next/font/google"
+import styles from "styles/Home.module.css"
+import { useDispatch, useSelector } from "react-redux"
+import { RootReducerType } from "store"
+import { clearCount, decreaseCountInit, increaseCountInit } from "store/Counter"
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] })
 
 export default function Home() {
+  const dispatch = useDispatch();
+  const { count, status } = useSelector((state: RootReducerType) => state.counter);
+
+  const handleIncreaseCounter = () => dispatch(increaseCountInit());
+  const handleDecreaseCounter = () => dispatch(decreaseCountInit());
+  const handleClearCounter = () => dispatch(clearCount());
+
   return (
     <>
       <Head>
@@ -26,7 +36,7 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              By{' '}
+              By{" "}
               <Image
                 src="/vercel.svg"
                 alt="Vercel Logo"
@@ -56,6 +66,31 @@ export default function Home() {
               height={31}
               priority
             />
+          </div>
+        </div>
+
+        <div className={styles.counter}>
+          <p className={styles.counterDisplay}>Counter: {count}</p>
+          <p className={styles.counterDisplay}>{status}</p>
+          <div className={styles.counterNumber}>
+            <button 
+              className={styles.counterButton}
+              onClick={handleIncreaseCounter}
+            >
+              + random
+            </button>
+            <button 
+              className={styles.counterButton}
+              onClick={handleClearCounter}
+            >
+              reset
+            </button>
+            <button 
+              className={styles.counterButton}
+              onClick={handleDecreaseCounter}
+            >
+              - random
+            </button>
           </div>
         </div>
 
