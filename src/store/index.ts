@@ -1,13 +1,26 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { createWrapper } from "next-redux-wrapper";
+import { createWrapper, HYDRATE } from "next-redux-wrapper";
 import { createLogger } from "redux-logger";
 import createSagaMiddleware from "redux-saga";
 import { all } from "redux-saga/effects";
 import counter, { getCounterSaga } from "@/store/Counter";
 
-const rootReducer = combineReducers({
+const isDev = process.env.NODE_ENV === "development";
+const combinedReducer = combineReducers({
   counter,
 });
+
+const rootReducer: typeof combinedReducer = (state, action) => {
+  if (action.type === HYDRATE) {
+    const nextState = {
+      ...state,
+      ...action.payload,
+    }
+    return nextState;
+  } else {
+    return combinedReducer(state, action);
+  }
+};
 
 export function* rootSaga() {
   yield all([
@@ -20,8 +33,8 @@ const sagaMiddleware = createSagaMiddleware();
 
 const store = configureStore({
   reducer: rootReducer,
-  middleware: process.env.NODE_ENV === "development" ? [sagaMiddleware, logger] : [sagaMiddleware],
-  devTools: process.env.NODE_ENV === "development",
+  middleware: isDev ? [sagaMiddleware, logger] : [sagaMiddleware],
+  devTools: isDev,
 });
 
 sagaMiddleware.run(rootSaga);
