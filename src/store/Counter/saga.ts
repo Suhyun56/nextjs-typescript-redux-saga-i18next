@@ -1,4 +1,4 @@
-import { getRandomNumber } from 'utils/counter';
+import { getRandomNumber } from '@/utils/counter';
 import {
   increaseCountInit,
   increaseCountSuccess,
@@ -6,7 +6,7 @@ import {
   decreaseCountInit,
   decreaseCountSuccess,
   decreaseCountError,
-} from "store/Counter";
+} from "@/store/Counter";
 import { all, call, put, takeLatest } from "redux-saga/effects";
 
 function* getPlusNumber() {

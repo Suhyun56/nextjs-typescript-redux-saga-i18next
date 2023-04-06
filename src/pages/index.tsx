@@ -3,8 +3,8 @@ import Image from "next/image"
 import { Inter } from "@next/font/google"
 import styles from "styles/Home.module.css"
 import { useDispatch, useSelector } from "react-redux"
-import { RootReducerType } from "store"
-import { clearCount, decreaseCountInit, increaseCountInit } from "store/Counter"
+import { RootReducerType } from "@/store"
+import { clearCount, decreaseCountInit, increaseCountInit } from "@/store/Counter"
 
 const inter = Inter({ subsets: ["latin"] })
 

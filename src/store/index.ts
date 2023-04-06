@@ -3,7 +3,7 @@ import { createWrapper } from "next-redux-wrapper";
 import { createLogger } from "redux-logger";
 import createSagaMiddleware from "redux-saga";
 import { all } from "redux-saga/effects";
-import counter, { getCounterSaga } from "store/Counter";
+import counter, { getCounterSaga } from "@/store/Counter";
 
 const rootReducer = combineReducers({
   counter,
